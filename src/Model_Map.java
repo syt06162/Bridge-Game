@@ -17,10 +17,10 @@ public class Model_Map extends Observable {
 	
 	Model_Map(String fileName) {
 		buildMap(fileName);
-	
 	}
 	
 	void buildMap(String fileName) {
+		System.out.println(fileName);
 		mapString = new ArrayList<String>();
 		
 		// ■ 파일 읽어서 mapString에 저장
@@ -150,7 +150,9 @@ public class Model_Map extends Observable {
         	System.out.println();
         }
         
-        
+        // observer 알려주기
+        setChanged();
+        notifyObservers();
 	}
 	
 	
