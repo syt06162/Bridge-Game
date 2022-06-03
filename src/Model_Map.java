@@ -107,6 +107,8 @@ public class Model_Map extends Observable {
         int cx = start_x, cy = start_y;
         for (int i = 0; i< mapString.size()-1; i++) {
         	map[cy][cx] = mapString.get(i);
+        	if (map[cy][cx].charAt(0)=='B')
+        		map[cy][cx+1] = "= L R";
         	switch (mapString.get(i).charAt( mapString.get(i).length()-1 )) {
 				case 'U': {
 					cy -= 1;
@@ -126,14 +128,28 @@ public class Model_Map extends Observable {
 				}
         	}
         }
+        // last end cell
         map[cy][cx] = mapString.get(mapString.size()-1);
         
+        // start, end 4칸으로 만들기
+        map[start_y-1][start_x-1] = "S X 1";
+        map[start_y-1][start_x] = "S X 2";
+        map[start_y][start_x-1] = "S X 3";
+        map[start_y][start_x] = "S " + mapString.get(0).charAt(2) + " 4";
+        
+        map[end_y-1][end_x] = "E 1";
+        map[end_y-1][end_x+1] = "E 2";
+        map[end_y][end_x] = "E 3";
+        map[end_y][end_x+1] = "E 4";
+        
+        // debug
         for (int i = 0; i< size_y; i++){
         	for (int j = 0; j< size_x; j++){
             	System.out.print(map[i][j].charAt(0));
             }
         	System.out.println();
         }
+        
         
 	}
 	
