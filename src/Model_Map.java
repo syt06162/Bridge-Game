@@ -12,6 +12,7 @@ public class Model_Map extends Observable {
 	private String[][] map;
 	private ArrayList<String> mapString;
 	private int start_x, start_y;
+	private int end_x, end_y;
 	private int size_x, size_y; // size_x = right-left+1
 	
 	Model_Map(String fileName) {
@@ -87,6 +88,8 @@ public class Model_Map extends Observable {
         // ■ 계산 값으로 초기 좌표, 맵 사이즈 지정 및 생성
         start_x = -left_max;
         start_y = -up_max;
+        end_x = currentX + start_x;
+        end_y = currentY + start_y;
         size_x = right_max - left_max + 1;
         size_y = down_max - up_max + 1;
         
@@ -131,7 +134,7 @@ public class Model_Map extends Observable {
             }
         	System.out.println();
         }
-		
+        
 	}
 	
 	
@@ -141,6 +144,12 @@ public class Model_Map extends Observable {
 	}
 	public int getStartY() {
 		return start_y;
+	}
+	public int getEndX() {
+		return end_x;
+	}
+	public int getEndY() {
+		return end_y;
 	}
 	public int getSizeX() {
 		return size_x;
