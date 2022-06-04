@@ -57,6 +57,10 @@ public class Controller_BoardFrame extends JFrame {
 	void gameStart(int numPlayers) {
 		remove(startPanel);
 		
+		// view, model
+		model_PlayerInfo = new Model_PlayerInfo(numPlayers);
+		model_Ingame = new Model_Ingame(model_Map ,model_PlayerInfo);
+		view_Map.startGame(model_PlayerInfo);
 		ingamePanel = new IngamePanel(model_Map, model_PlayerInfo, model_Ingame, this); 
 		add(ingamePanel, BorderLayout.SOUTH);
 		
@@ -137,18 +141,17 @@ class IngamePanel extends JPanel {
 	// model_map
 	private Model_Map model_map;
 	
-	// playerInfo : Model, View, Panel
+	// playerInfo : Model, View
 	private Model_PlayerInfo model_PlayerInfo;
 	private View_PlayerInfo view_PlayerInfo;
-	
-	
-	// ---UI--
-	// 우측 패널 (Ingame(공지, 주사위값), rrPanel, inputPanel_
-	private JPanel rightPanel;
 	
 	//  Ingame: Model, View (has playerInfo panel as component)
 	private Model_Ingame model_Ingame;
 	private View_Ingame view_Ingame;
+	
+	// ---UI--
+	// 우측 패널 (Ingame(공지, 주사위값), rrPanel, inputPanel
+	private JPanel rightPanel;
 	
 	//  우측 하단 Button들
 	private JPanel rightDownPanel;

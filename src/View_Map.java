@@ -1,12 +1,18 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 @SuppressWarnings("deprecation")
@@ -14,40 +20,50 @@ class View_Map extends JPanel implements Observer{
 
 	private Controller_BoardFrame controller;
 	private Model_Map model;
+	private boolean isPlaying;
 	
+	// map info
 	private String[][] map; 
 	private Cell[][] cells;
 	private int size_y;
 	private int size_x;
 	
+	// icon and images
 	private ImageIcon ic_Cell, ic_Null, ic_Pdriver, ic_Hammer, ic_Saw, ic_B_start, ic_B_real;
 	private ImageIcon[] ic_Start;
 	private ImageIcon[] ic_End;
 	
-	private Image img_Cell, img_Null, img_Pdriver, img_Hammer, img_Saw, img_B_start, img_B_real;;
+	private Image img_Cell, img_Null, img_Pdriver, img_Hammer, img_Saw, img_B_start, img_B_real;
 	private Image[] img_Start;
 	private Image[] img_End;
 	
+	// player character
+	private Model_PlayerInfo model_PlayerInfo;
+	private Player[] players;
+	private ArrayList<Piece> piece;
+	private int numPlayers;
 	
 	View_Map(Model_Map model){
 		setPreferredSize(new Dimension(1000,800));
+		isPlaying = false;
 		
 		// model
 		this.model = model;
 		
 		// image, icons
 		initImageIcons();
-		
+
 		// initial map = default.map
 		mapInitialized();
-		
 		
 		System.out.println("view intial");
 	}
 	
 	@Override
 	public void update(Observable o, Object arg) {
+		
 		mapInitialized();
+		
 		System.out.println("view update");
 	}
 	
@@ -158,6 +174,31 @@ class View_Map extends JPanel implements Observer{
 				add(cells[i][j]);
 			}
 		}
+
+		// game 진행중인 경우 - 지도 로드 뿐만아니라 piece 위치도 로드
+		if (isPlaying) {
+			int py, px;
+			for (int i = 0; i<numPlayers; i++) {
+				py = players[i].getPos_y();
+				px = players[i].getPos_x();
+				cells[py][px].add(piece.get(i));
+			}
+			
+			// 크기 일정하도록 하기
+			for (int i = 0; i<numPlayers; i++) {
+				py = players[i].getPos_y();
+				px = players[i].getPos_x();
+				switch (cells[py][px].getComponentCount()) {	
+					case 1: {
+						cells[py][px].add(new Piece());
+					}
+					case 2: {
+						cells[py][px].add(new Piece());
+					}
+				}
+			}
+				
+		}
 		
 		// 새로 갱신
 		revalidate();
@@ -169,7 +210,7 @@ class View_Map extends JPanel implements Observer{
 	class Cell extends JPanel{
 		Image img;
 		Cell(Image img){
-			setLayout(new FlowLayout());
+			setLayout(new GridLayout(2,2, 3,3));
 			this.img = img;
 			
 			setVisible(true);
@@ -180,12 +221,53 @@ class View_Map extends JPanel implements Observer{
 	        g.drawImage(img,0,0,getWidth(),getHeight(),this);
 	    }
 	}
+	
+	// inner class Piece : one Piece in board
+	class Piece extends JPanel{
+		private final Color[] colorList = 
+			{Color.RED, Color.YELLOW, Color.GREEN, Color.PINK};
+		
+		// 말 생성
+		Piece(int num) {
+			setLayout(new GridLayout(1,1));
+			JLabel name = new JLabel(String.valueOf(num+1));
+			name.setHorizontalAlignment(JLabel.CENTER);
+			add(name);
+			
+			setBackground(colorList[num]);
+			setVisible(true);
+		}
+		
+		// 칸 사이즈 조절용
+		Piece() {
+			setLayout(new GridLayout(1,1));
+			setBackground(new Color(255,0,0,0));
+			setVisible(true);
+		}
+	}
 
 	
 	void setController(Controller_BoardFrame controller) {
 		this.controller = controller;
 	}
 	
+	//temp
+	void addTemp(int y, int x) {
+		
+		cells[y][x].add(new JButton("P1"));
+	}
 	
-	
+	void startGame(Model_PlayerInfo model_PlayerInfo) {
+		isPlaying = true;
+		this.model_PlayerInfo = model_PlayerInfo;
+		this.players = model_PlayerInfo.getPlayers();
+		this.numPlayers = model_PlayerInfo.getNumPlayers();
+		
+		// add pieces
+		piece = new ArrayList<Piece>();
+		for (int i = 0; i<numPlayers; i++) {
+			piece.add(new Piece(i));
+		}
+		mapInitialized();
+	}
 }

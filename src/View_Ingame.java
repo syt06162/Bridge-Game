@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.Observable;
@@ -32,20 +33,21 @@ public class View_Ingame extends JPanel implements Observer{
 	private JLabel pleaseInput;
 		
 		
-	public View_Ingame(Model_Map model_Map, Model_PlayerInfo model_PlayerInfo, Model_Ingame model_ingame) {
+	public View_Ingame(Model_Map model_Map, Model_PlayerInfo model_PlayerInfo, Model_Ingame model_Ingame) {
 		this.model_PlayerInfo = model_PlayerInfo;
-		this.model_PlayerInfo = model_PlayerInfo;
+		this.model_Ingame = model_Ingame;
 		
-		
+		// UI setting
 		setLayout(new GridLayout(1,2));
 		
 		// left = noticePanel
 		noticePanel = new JPanel(new GridLayout(NOTICE_CNT,1));
+		noticePanel.setBackground(Color.YELLOW);
 		noticePanel.setPreferredSize(new Dimension(400,120));
 		noticePanel.setVisible(true);
 		noticeList = new JLabel[NOTICE_CNT];
 		for (int i = 0; i<NOTICE_CNT; i++) {
-			noticeList[i] = new JLabel("hisaddddddddddddddddddas");
+			noticeList[i] = new JLabel();
 			noticePanel.add(noticeList[i]);
 		}
 		add(noticePanel);
@@ -60,16 +62,26 @@ public class View_Ingame extends JPanel implements Observer{
 		rollResultPanel.add(rollResultLabel);
 		rollResultPanel.add(canMoveLabel);
 		pleaseInput = new JLabel("input move (ex. ddrru):");
+		pleaseInput.setHorizontalAlignment(JLabel.CENTER);
 		rollResultPanel.add(pleaseInput);
 		add(rollResultPanel);
 		
 		setVisible(true);
+		
+		updateNotice(); // notice
+	}
+	
+	private void updateNotice() {
+		String[] notice = model_Ingame.getGameNotice();
+		for (int i = 0; i<3; i++) {
+			noticeList[i].setText(notice[i]);
+		}
 	}
 	
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
 		
+		updateNotice(); // notice
 	}
 }

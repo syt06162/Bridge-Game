@@ -27,10 +27,11 @@ public class Model_PlayerInfo extends Observable {
 }
 
 class Player {
+
 	private String name;
-	
 	private int pos_y;
 	private int pos_x;
+	private boolean isFinished;
 	
 	// number of cards, rankPoint, totalPoint;
 	private int Bcard = 0;
@@ -42,10 +43,59 @@ class Player {
 	
 	Player(String name){
 		this.name = name;
+		isFinished = false;
+	}
+	
+	void setInitialPosition(int iy, int ix) {
+		pos_y = iy;
+		pos_x = ix;
 	}
 	
 	void move(int py, int px) {
-		pos_y += py;
-		pos_x += px;
+		pos_y = py;
+		pos_x = px;
+		
 	}
+	
+	// getters
+	public String getName() {
+		return name;
+	}
+
+	public int getPos_y() {
+		return pos_y;
+	}
+
+	public int getPos_x() {
+		return pos_x;
+	}
+
+	public boolean isFinished() {
+		return isFinished;
+	}
+
+	public int getBcard() {
+		return Bcard;
+	}
+
+	public int getPcard() {
+		return Pcard;
+	}
+
+	public int getHcard() {
+		return Hcard;
+	}
+
+	public int getScard() {
+		return Scard;
+	}
+
+	public int getRankPoint() {
+		return rankPoint;
+	}
+
+	public int getTotalPoint() {
+		return totalPoint;
+	}
+	
 }
