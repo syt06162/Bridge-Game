@@ -51,7 +51,7 @@ class View_Map extends JPanel implements Observer{
 		System.out.println("view update");
 	}
 	
-	void initImageIcons() {
+	private void initImageIcons() {
 		ic_Cell = new ImageIcon("images/cell_C.png");
 		ic_Null = new ImageIcon("images/cell_N.png");
 		ic_Pdriver = new ImageIcon("images/cell_P.png");
@@ -91,7 +91,7 @@ class View_Map extends JPanel implements Observer{
 		
 	}
 
-	void mapInitialized() {
+	private void mapInitialized() {
 		map = model.getMap();
 		size_y = model.getSizeY();
 		size_x = model.getSizeX();
