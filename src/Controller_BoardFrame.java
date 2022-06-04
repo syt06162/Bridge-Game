@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,7 +26,8 @@ public class Controller_BoardFrame extends JFrame {
 	private View_Map view_Map;
 	
 	private Model_PlayerInfo model_PlayerInfo;
-	private View_PlayerInfo view_PlayerInfo;
+	
+	private Model_Ingame model_Ingame;
 	
 	private JPanel startPanel;
 	private JPanel ingamePanel;
@@ -55,7 +57,7 @@ public class Controller_BoardFrame extends JFrame {
 	void gameStart(int numPlayers) {
 		remove(startPanel);
 		
-		IngamePanel ingamePanel = new IngamePanel(model_PlayerInfo, this); 
+		ingamePanel = new IngamePanel(model_Map, model_PlayerInfo, model_Ingame, this); 
 		add(ingamePanel, BorderLayout.SOUTH);
 		
 		revalidate();
@@ -128,23 +130,85 @@ class StartPanel extends JPanel {
 }
 
 class IngamePanel extends JPanel {
-	private Model_Map model_map;
-	private Model_PlayerInfo model_PlayerInfo;
+	
+	// controller
 	private Controller_BoardFrame controller;
 	
+	// model_map
+	private Model_Map model_map;
+	
+	// playerInfo : Model, View, Panel
+	private Model_PlayerInfo model_PlayerInfo;
 	private View_PlayerInfo view_PlayerInfo;
 	
-	IngamePanel(Model_PlayerInfo model_PlayerInfo, Controller_BoardFrame controller) {
+	
+	// ---UI--
+	// 우측 패널 (Ingame(공지, 주사위값), rrPanel, inputPanel_
+	private JPanel rightPanel;
+	
+	//  Ingame: Model, View (has playerInfo panel as component)
+	private Model_Ingame model_Ingame;
+	private View_Ingame view_Ingame;
+	
+	//  우측 하단 Button들
+	private JPanel rightDownPanel;
+	
+	private JPanel rrPanel;
+	private JButton restButton;
+	private JButton rollButton;
+	
+	private JPanel inputMovePanel;
+	private JTextField inputMoveTextField;
+	private JButton inputMoveButton;
+
+	
+	IngamePanel(Model_Map model_map, Model_PlayerInfo model_PlayerInfo, Model_Ingame model_Ingame,  Controller_BoardFrame controller) {
 		this.model_PlayerInfo = model_PlayerInfo;
+		this.model_Ingame = model_Ingame;
+		this.model_map = model_map;
 		this.controller = controller;
 		setPreferredSize(new Dimension(1000,200));
-		setLayout(new GridLayout(1,1));
+		setLayout(new GridLayout(1,2));
 		
-		// 일단 임시
+		// 좌측 - player info
 		view_PlayerInfo = new View_PlayerInfo(model_PlayerInfo);
 		add(view_PlayerInfo);
+		
+		// 우측 패널 (2,1) grid
+		rightPanel = new JPanel(new GridLayout(2,1));
+		rightPanel.setPreferredSize(new Dimension(700,200));
+		rightPanel.setVisible(true);
+		add(rightPanel);
+		
+		//  우측 상단 - ingame view
+		view_Ingame = new View_Ingame(model_map, model_PlayerInfo, model_Ingame);
+		rightPanel.add(view_Ingame);
+		
+		//  우측 하단 - (rest roll) 버튼, 이동입력창
+		rightDownPanel = new JPanel(new GridLayout(1,2, 10, 10));
+		rightDownPanel.setPreferredSize(new Dimension(700, 80));
+		rightDownPanel.setVisible(true);
+		
+		rrPanel = new JPanel(new GridLayout(1,2,10,10));
+		rrPanel.setVisible(true);
+		restButton = new JButton("REST");
+		rollButton = new JButton("ROLL");
+		rrPanel.add(restButton);
+		rrPanel.add(rollButton);
+		
+		inputMovePanel = new JPanel(new GridLayout(2,1,10,10));
+		inputMovePanel.setVisible(true);
+		inputMoveTextField = new JTextField(5);
+		inputMoveButton = new JButton("move");
+		inputMovePanel.add(inputMoveTextField);
+		inputMovePanel.add(inputMoveButton);
+		
+		rightDownPanel.add(rrPanel);
+		rightDownPanel.add(inputMovePanel);
+		rightPanel.add(rightDownPanel);
 		
 		setVisible(true);
 	}
 	
+
 }

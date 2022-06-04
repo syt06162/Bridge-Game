@@ -14,6 +14,7 @@ public class View_Ingame extends JPanel implements Observer{
 	private Controller_BoardFrame controller;
 	private Model_Map model_Map;
 	private Model_PlayerInfo model_PlayerInfo;
+	private Model_Ingame model_Ingame;
 	
 	//player info - 갖고있으면 안됨?
 	private Player[] players;
@@ -28,31 +29,41 @@ public class View_Ingame extends JPanel implements Observer{
 	private String canMoveText = "Can Move : 0";
 	private JLabel rollResultLabel;
 	private JLabel canMoveLabel;
+	private JLabel pleaseInput;
 		
 		
-	public View_Ingame(Model_PlayerInfo model_PlayerInfo) {
+	public View_Ingame(Model_Map model_Map, Model_PlayerInfo model_PlayerInfo, Model_Ingame model_ingame) {
 		this.model_PlayerInfo = model_PlayerInfo;
+		this.model_PlayerInfo = model_PlayerInfo;
+		
 		
 		setLayout(new GridLayout(1,2));
 		
 		// left = noticePanel
 		noticePanel = new JPanel(new GridLayout(NOTICE_CNT,1));
+		noticePanel.setPreferredSize(new Dimension(400,120));
+		noticePanel.setVisible(true);
 		noticeList = new JLabel[NOTICE_CNT];
 		for (int i = 0; i<NOTICE_CNT; i++) {
-			noticeList[i] = new JLabel("hi");
+			noticeList[i] = new JLabel("hisaddddddddddddddddddas");
 			noticePanel.add(noticeList[i]);
 		}
 		add(noticePanel);
 		
 		// right = rollResultPanel
 		rollResultPanel = new JPanel(new GridLayout(3,1));
+		rollResultPanel.setPreferredSize(new Dimension(300,120));
+		rollResultPanel.setVisible(true);
+		
 		rollResultLabel = new JLabel(rollResultText);
 		canMoveLabel = new JLabel(canMoveText);
 		rollResultPanel.add(rollResultLabel);
 		rollResultPanel.add(canMoveLabel);
-		
+		pleaseInput = new JLabel("input move (ex. ddrru):");
+		rollResultPanel.add(pleaseInput);
 		add(rollResultPanel);
-
+		
+		setVisible(true);
 	}
 	
 	

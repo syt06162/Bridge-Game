@@ -11,7 +11,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class View_PlayerInfo extends JPanel implements Observer{
 	private Controller_BoardFrame controller;
-	private Model_Map model_Map;
 	private Model_PlayerInfo model_PlayerInfo;
 	
 	//player info - 갖고있으면 안됨?
