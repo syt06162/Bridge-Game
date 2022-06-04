@@ -251,12 +251,8 @@ class View_Map extends JPanel implements Observer{
 		this.controller = controller;
 	}
 	
-	//temp
-	void addTemp(int y, int x) {
-		
-		cells[y][x].add(new JButton("P1"));
-	}
 	
+	// View - model ¿¬°á!
 	void startGame(Model_PlayerInfo model_PlayerInfo) {
 		isPlaying = true;
 		this.model_PlayerInfo = model_PlayerInfo;

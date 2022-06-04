@@ -67,6 +67,14 @@ public class View_PlayerInfo extends JPanel implements Observer{
 	
 	private void showPlayersInTable() {
 		String[] temp = new String[7];
+		
+		// 기존 table 삭제
+		int rowCnt = dtModel.getRowCount();
+		while (rowCnt != 0) {
+			dtModel.removeRow(0);
+			rowCnt--;
+		}
+		
 		for (int i = 0; i<numPlayers; i++) {
 			temp[0] = players[i].getName();
 			temp[1] = String.valueOf( players[i].getBcard());
@@ -77,6 +85,8 @@ public class View_PlayerInfo extends JPanel implements Observer{
 			temp[6] = String.valueOf( players[i].getTotalPoint());
 			dtModel.addRow(temp);
 		}
+		
+		// dtModel.fireTableDataChanged();
 	}
 	
 	

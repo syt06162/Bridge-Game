@@ -13,7 +13,7 @@ public class Model_PlayerInfo extends Observable {
 		this.numPlayers = numPlayers;
 		players = new Player[numPlayers];
 		for (int i = 0 ; i<numPlayers; i++) {
-			players[i] = new Player("P"+String.valueOf(i+1));
+			players[i] = new Player("P"+String.valueOf(i+1), this);
 		}
 	}
 	
@@ -24,10 +24,17 @@ public class Model_PlayerInfo extends Observable {
 	int getNumPlayers() {
 		return numPlayers;
 	}
+	
+	void notifyPlayerInfoChanged() {
+		setChanged();
+		notifyObservers();
+	}
 }
 
 class Player {
-
+	// to notify observer
+	private Model_PlayerInfo model;
+	
 	private String name;
 	private int pos_y;
 	private int pos_x;
@@ -41,8 +48,9 @@ class Player {
 	private int rankPoint = 0;
 	private int totalPoint = 0;
 	
-	Player(String name){
+	Player(String name, Model_PlayerInfo model){
 		this.name = name;
+		this.model = model;
 		isFinished = false;
 	}
 	
@@ -51,10 +59,24 @@ class Player {
 		pos_x = ix;
 	}
 	
+	// roll or rest result : move or ++/-- card
+	
 	void move(int py, int px) {
 		pos_y = py;
 		pos_x = px;
-		
+		model.notifyPlayerInfoChanged();
+	}
+	void decreaseBcard() {
+		Bcard--;
+	}
+	void increasePcard() {
+		Pcard++;
+	}
+	void increaseHcard() {
+		Hcard++;
+	}
+	void increaseScard() {
+		Scard++;
 	}
 	
 	// getters
@@ -97,5 +119,6 @@ class Player {
 	public int getTotalPoint() {
 		return totalPoint;
 	}
+	
 	
 }

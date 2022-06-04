@@ -61,7 +61,7 @@ public class Controller_BoardFrame extends JFrame {
 		model_PlayerInfo = new Model_PlayerInfo(numPlayers);
 		model_Ingame = new Model_Ingame(model_Map ,model_PlayerInfo);
 		view_Map.startGame(model_PlayerInfo);
-		ingamePanel = new IngamePanel(model_Map, model_PlayerInfo, model_Ingame, this); 
+		ingamePanel = new IngamePanel(model_Map, model_PlayerInfo, model_Ingame, this, view_Map); 
 		add(ingamePanel, BorderLayout.SOUTH);
 		
 		revalidate();
@@ -165,7 +165,7 @@ class IngamePanel extends JPanel {
 	private JButton inputMoveButton;
 
 	
-	IngamePanel(Model_Map model_map, Model_PlayerInfo model_PlayerInfo, Model_Ingame model_Ingame,  Controller_BoardFrame controller) {
+	IngamePanel(Model_Map model_map, Model_PlayerInfo model_PlayerInfo, Model_Ingame model_Ingame,  Controller_BoardFrame controller, View_Map view_Map) {
 		this.model_PlayerInfo = model_PlayerInfo;
 		this.model_Ingame = model_Ingame;
 		this.model_map = model_map;
@@ -175,6 +175,8 @@ class IngamePanel extends JPanel {
 		
 		// 좌측 - player info
 		view_PlayerInfo = new View_PlayerInfo(model_PlayerInfo);
+		model_PlayerInfo.addObserver(view_PlayerInfo);
+		model_PlayerInfo.addObserver(view_Map);
 		add(view_PlayerInfo);
 		
 		// 우측 패널 (2,1) grid
@@ -186,6 +188,8 @@ class IngamePanel extends JPanel {
 		//  우측 상단 - ingame view
 		view_Ingame = new View_Ingame(model_map, model_PlayerInfo, model_Ingame);
 		rightPanel.add(view_Ingame);
+		model_Ingame.addObserver(view_Ingame);
+		model_Ingame.addObserver(view_PlayerInfo);
 		
 		//  우측 하단 - (rest roll) 버튼, 이동입력창
 		rightDownPanel = new JPanel(new GridLayout(1,2, 10, 10));
@@ -195,7 +199,19 @@ class IngamePanel extends JPanel {
 		rrPanel = new JPanel(new GridLayout(1,2,10,10));
 		rrPanel.setVisible(true);
 		restButton = new JButton("REST");
+		restButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model_Ingame.rest();
+			}
+		});
 		rollButton = new JButton("ROLL");
+		rollButton.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model_Ingame.roll();
+			}
+		});
 		rrPanel.add(restButton);
 		rrPanel.add(rollButton);
 		
@@ -203,6 +219,12 @@ class IngamePanel extends JPanel {
 		inputMovePanel.setVisible(true);
 		inputMoveTextField = new JTextField(5);
 		inputMoveButton = new JButton("move");
+		inputMoveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model_Ingame.inputMove(inputMoveTextField.getText());
+			}
+		});
 		inputMovePanel.add(inputMoveTextField);
 		inputMovePanel.add(inputMoveButton);
 		

@@ -26,8 +26,8 @@ public class View_Ingame extends JPanel implements Observer{
 	private JLabel[] noticeList;
 	
 	private JPanel rollResultPanel;
-	private String rollResultText = "Roll Result : 0";
-	private String canMoveText = "Can Move : 0";
+	private String rollResultText = "Roll Result : ";
+	private String canMoveText = "Can Move : ";
 	private JLabel rollResultLabel;
 	private JLabel canMoveLabel;
 	private JLabel pleaseInput;
@@ -78,10 +78,32 @@ public class View_Ingame extends JPanel implements Observer{
 		}
 	}
 	
+	private void updateRollResult() {
+		rollResultLabel.setText(rollResultText + String.valueOf( model_Ingame.getRollResult() ));
+		canMoveLabel.setText(canMoveText + String.valueOf( model_Ingame.getCanMove() ));
+	}
+	
+	private void updateTurnEnd() {
+		rollResultLabel.setText(rollResultText);
+		canMoveLabel.setText(canMoveText);
+	}
+	
 	
 	@Override
 	public void update(Observable o, Object arg) {
+		System.out.println("roll updte");
+		int flag = model_Ingame.getObserverUpdateFlag();
 		
-		updateNotice(); // notice
+		if (flag == 0)
+			updateNotice(); // notice
+		else if (flag == 1)
+			updateRollResult();
+		else if (flag == 4)
+			updateTurnEnd();
+		
 	}
+	
+//	void setController(Controller_BoardFrame controller) {
+//		this.controller = controller;
+//	}
 }
