@@ -28,6 +28,7 @@ public class Model_Ingame extends Observable {
 	private int canMove;
 	
 	// observerUpdateFlag : 0:notice, 1:roll, 2:rest, 3:move, 4:turn end
+	// notice observer 이름: 0,1,4: ingame   / 2,3: playerInfo      /  4:map 
 	private int observerUpdateFlag;
 
 	Model_Ingame(Model_Map model_Map , Model_PlayerInfo model_PlayerInfo) {
@@ -116,6 +117,7 @@ public class Model_Ingame extends Observable {
 	
 	void inputMove(String input) {
 		Player nowPlayer = turnList.get(0);
+		
 		if (RRorIM == 0) {
 			newNotice(nowPlayer, "you should 'Roll or Rest'");
 			return;
@@ -125,7 +127,7 @@ public class Model_Ingame extends Observable {
 			return;
 		}
 		
-		// 이제 input이 이동 가능한 입력인지 확인 절차
+		// ■ 이제 input이 이동 가능한 입력인지 확인 절차
 		// input, player 시작 과표 기억
 		input = input.toUpperCase();
 		int cy = nowPlayer.getPos_y();
@@ -138,6 +140,7 @@ public class Model_Ingame extends Observable {
 		char moveDirection;
 		int bridgeCnt = 0;
 		
+		// ■ 한칸 한칸 확인 절차
 		for (int i = 0; i<canMove; i++) {
 			moveDirection = input.charAt(i);
 			
@@ -191,8 +194,8 @@ public class Model_Ingame extends Observable {
 			}
 		}
 		
-		// flag 가 true 면 갈 수 있는것,-> move!
-		// flag 가 false면 갈 수 없는것 -> 경고후 return
+		// ■ flag 가 true 면 갈 수 있는것,-> move!
+		// ■ flag 가 false면 갈 수 없는것 -> 경고후 return
 		if (flag == false) {
 			newNotice(nowPlayer, "your input is invalid. input correctly");
 			return;
@@ -203,6 +206,31 @@ public class Model_Ingame extends Observable {
 			while (bridgeCnt > 0) {
 				nowPlayer.increaseBcard();
 				bridgeCnt--;
+			}
+			
+			// 카드 얻는 위치이면 카드 얻기
+			char nowCellType = map[nowPlayer.getPos_y()][nowPlayer.getPos_x()].charAt(0);
+			System.out.print(nowCellType + "   ahah  ");
+			switch (nowCellType) {
+				case 'P': {
+					nowPlayer.increasePcard();
+					newNotice(nowPlayer, "get 1 Pdriver !");
+					break;
+				}
+				case 'H': {
+					nowPlayer.increaseHcard();
+					newNotice(nowPlayer, "get 1 Hammer !");
+					break;
+				}
+				case 'S': {
+					nowPlayer.increaseScard();
+					newNotice(nowPlayer, "get 1 Saw !");
+					break;
+				}
+				default : {
+					System.out.println("dflt");
+					break;
+				}
 			}
 			
 			RRorIM = 0;

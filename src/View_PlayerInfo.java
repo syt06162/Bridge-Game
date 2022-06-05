@@ -86,7 +86,7 @@ public class View_PlayerInfo extends JPanel implements Observer{
 			dtModel.addRow(temp);
 		}
 		
-		// dtModel.fireTableDataChanged();
+		dtModel.fireTableDataChanged();
 	}
 	
 	
