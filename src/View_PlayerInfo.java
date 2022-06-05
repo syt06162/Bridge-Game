@@ -81,7 +81,7 @@ public class View_PlayerInfo extends JPanel implements Observer{
 			temp[2] = String.valueOf( players[i].getPcard());
 			temp[3] = String.valueOf( players[i].getHcard());
 			temp[4] = String.valueOf( players[i].getScard());
-			temp[5] = String.valueOf( players[i].getRankPoint());
+			temp[5] = String.valueOf( players[i].getRank());
 			temp[6] = String.valueOf( players[i].getTotalPoint());
 			dtModel.addRow(temp);
 		}

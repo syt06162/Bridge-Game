@@ -135,7 +135,8 @@ public class Model_Map extends Observable {
         map[start_y-1][start_x-1] = "S X 1";
         map[start_y-1][start_x] = "S X 2";
         map[start_y][start_x-1] = "S X 3";
-        map[start_y][start_x] = "S " + mapString.get(0).charAt(2) + " 4";
+        map[start_y][start_x] = "S " + mapString.get(0).charAt(2) 
+        							+ " " + mapString.get(0).charAt(2);
         
         map[end_y-1][end_x] = "E 1";
         map[end_y-1][end_x+1] = "E 2";

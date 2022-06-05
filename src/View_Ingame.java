@@ -6,6 +6,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,7 +18,7 @@ public class View_Ingame extends JPanel implements Observer{
 	private Model_PlayerInfo model_PlayerInfo;
 	private Model_Ingame model_Ingame;
 	
-	//player info - 갖고있으면 안됨?
+	//player info
 	private Player[] players;
 	
 	// panel 구성
@@ -88,6 +89,11 @@ public class View_Ingame extends JPanel implements Observer{
 		canMoveLabel.setText(canMoveText);
 	}
 	
+	private void gameEnd() {
+		JOptionPane.showMessageDialog(
+				null, "winner: " + model_PlayerInfo.getWinnerString(), "Game End", JOptionPane.DEFAULT_OPTION);
+	}
+	
 	
 	@Override
 	public void update(Observable o, Object arg) {
@@ -100,7 +106,8 @@ public class View_Ingame extends JPanel implements Observer{
 			updateRollResult();
 		else if (flag == 4)
 			updateTurnEnd();
-		
+		else if (flag == -1)
+			gameEnd();
 	}
 	
 //	void setController(Controller_BoardFrame controller) {

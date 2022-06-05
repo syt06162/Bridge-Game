@@ -27,8 +27,8 @@ public class Model_Ingame extends Observable {
 	private int rollResult;
 	private int canMove;
 	
-	// observerUpdateFlag : 0:notice, 1:roll, 2:rest, 3:move, 4:turn end
-	// notice observer 이름: 0,1,4: ingame   / 2,3: playerInfo      /  4:map 
+	// observerUpdateFlag : 0:notice, 1:roll, 2:rest, 3:move, 4:turn end  -1: game end
+	// notice observer 이름: 0,1,4: ingame   / 2,3: playerInfo      /  4:map / -1:ingame
 	private int observerUpdateFlag;
 
 	Model_Ingame(Model_Map model_Map , Model_PlayerInfo model_PlayerInfo) {
@@ -68,6 +68,11 @@ public class Model_Ingame extends Observable {
 	
 	// roll, rest, inputmove
 	void roll() {
+		if (turnList.size() == 0) {
+			newNotice("game is already ended");
+			return;
+		}
+		
 		Player nowPlayer = turnList.get(0);
 		
 		if (RRorIM == 1) {
@@ -80,7 +85,7 @@ public class Model_Ingame extends Observable {
 		canMove = rollResult - nowPlayer.getBcard();
 		if (canMove<=0) {
 			canMove = 0;
-			newNotice(nowPlayer, "you cannot move. too much Bridge card");
+			newNotice(nowPlayer, "you cannot move. ");
 			turnEnd();
 		}
 		else {
@@ -95,6 +100,11 @@ public class Model_Ingame extends Observable {
 	}
 	
 	void rest() {
+		if (turnList.size() == 0) {
+			newNotice("game is already ended");
+			return;
+		}
+		
 		Player nowPlayer = turnList.get(0);
 		if (RRorIM == 1) {
 			// 지금은 Roll 이나 Rest 차례가 아니라, input move 할 차례
@@ -116,6 +126,11 @@ public class Model_Ingame extends Observable {
 	}
 	
 	void inputMove(String input) {
+		if (turnList.size() == 0) {
+			newNotice("game is already ended");
+			return;
+		}
+		
 		Player nowPlayer = turnList.get(0);
 		
 		if (RRorIM == 0) {
@@ -138,6 +153,7 @@ public class Model_Ingame extends Observable {
 		// ty,tx: 한칸한칸 확인할 좌표
 		int ty = cy, tx = cx;
 		char moveDirection;
+		Boolean isEnd = false;
 		int bridgeCnt = 0;
 		
 		// ■ 한칸 한칸 확인 절차
@@ -192,6 +208,30 @@ public class Model_Ingame extends Observable {
 					break;
 				}
 			}
+			
+			// 종료 위치인 경우, 뒤의 값이 올바른 경우 end
+			if (map[ty][tx].charAt(0) == 'E') {
+				Boolean isValid = true;
+				for (int j = i+1; j<canMove; j++) {
+					char next = input.charAt(j);
+					if ((next == 'R') || (next == 'L') || (next == 'U') || (next == 'D')) 
+						continue; 
+					else {
+						isValid = false;
+						break;
+					}
+				}
+				
+				if (isValid) {
+					flag = true;
+					isEnd = true;
+					break;
+				}
+				else {
+					flag = false;
+					break;
+				}
+			}
 		}
 		
 		// ■ flag 가 true 면 갈 수 있는것,-> move!
@@ -201,7 +241,7 @@ public class Model_Ingame extends Observable {
 			return;
 		}
 		else {
-			// 이동 / 다리 건넌수만큼 카드 get
+			// 이동 , 다리 건넌수만큼 카드 get
 			nowPlayer.move(ty, tx);
 			while (bridgeCnt > 0) {
 				nowPlayer.increaseBcard();
@@ -235,7 +275,14 @@ public class Model_Ingame extends Observable {
 			
 			RRorIM = 0;
 			newNotice(nowPlayer, "move success!");
-			turnEnd();
+			
+			// End 도착했으면! 종료!
+			if (isEnd) {
+				turnEndGoalIn();
+			}
+			else {
+				turnEnd();
+			}
 		}
 		
 	}
@@ -254,6 +301,45 @@ public class Model_Ingame extends Observable {
 	
 	void turnEndGoalIn() {
 		Player p = turnList.remove(0);
+		goalInList.add(p);
+		int rank = goalInList.size() ;
+		p.setRank(rank);
+		p.calculateTotalPoints();
+		
+		// observer
+		observerUpdateFlag = 4;
+		setChanged();
+		notifyObservers();
+		
+		// 게임 종료인지 확인 (1명 남으면 종료)
+		if (turnList.size() == 1) {
+			endGame();
+		}
+		else {
+			Player now = turnList.get(0);
+			newNotice(now, "Roll or Rest?");
+		}
+	}
+	
+	
+	void endGame() {
+		Player p = turnList.remove(0);
+		p.calculateTotalPoints();
+		
+		// observer
+		observerUpdateFlag = 4;
+		setChanged();
+		notifyObservers();
+		
+		newNotice("==Game End==");
+		model_PlayerInfo.calcaulateWinner();
+		newNotice("winner : " + model_PlayerInfo.getWinnerString());
+		
+		// game end observer
+		observerUpdateFlag = -1;
+		setChanged();
+		notifyObservers();
+		
 	}
 	
 	

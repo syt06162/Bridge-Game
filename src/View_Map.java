@@ -129,9 +129,13 @@ class View_Map extends JPanel implements Observer{
 				switch (map[i][j].charAt(0)) {
 					case 'S': {
 						// start 인지 saw 인지 구분
-						int value = map[i][j].charAt(4)-'0';
-						if (value>=1 && value<=4) {
-							img = img_Start[value];
+						int value4 = map[i][j].charAt(4)-'0';
+						int value2 = map[i][j].charAt(2)-'0';
+						if (value2 == value4) {
+							img = img_Start[4];
+						}
+						else if (value4>=1 && value4<=3) {
+							img = img_Start[value4];
 						}
 						else
 							img = img_Saw;
