@@ -97,7 +97,6 @@ public class View_Ingame extends JPanel implements Observer{
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("roll updte");
 		int flag = model_Ingame.getObserverUpdateFlag();
 		
 		if (flag == 0)

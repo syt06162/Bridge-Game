@@ -56,7 +56,6 @@ class View_Map extends JPanel implements Observer{
 		// initial map = default.map
 		mapInitialized();
 		
-		System.out.println("view intial");
 	}
 	
 	@Override
@@ -64,7 +63,6 @@ class View_Map extends JPanel implements Observer{
 		
 		mapInitialized();
 		
-		System.out.println("view update");
 	}
 	
 	private void initImageIcons() {

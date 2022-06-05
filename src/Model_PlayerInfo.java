@@ -95,7 +95,6 @@ class Player {
 		totalPoint += Pcard;
 		totalPoint += Hcard*2;
 		totalPoint += Scard*3;
-		System.out.println(rank + "my rank ");
 		int rankPoint = 0;
 		switch (rank) {
 			case 1: {

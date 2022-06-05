@@ -250,7 +250,6 @@ public class Model_Ingame extends Observable {
 			
 			// 카드 얻는 위치이면 카드 얻기
 			char nowCellType = map[nowPlayer.getPos_y()][nowPlayer.getPos_x()].charAt(0);
-			System.out.print(nowCellType + "   ahah  ");
 			switch (nowCellType) {
 				case 'P': {
 					nowPlayer.increasePcard();
@@ -268,7 +267,6 @@ public class Model_Ingame extends Observable {
 					break;
 				}
 				default : {
-					System.out.println("dflt");
 					break;
 				}
 			}
@@ -300,6 +298,7 @@ public class Model_Ingame extends Observable {
 	}
 	
 	void turnEndGoalIn() {
+		canGoBack = false;
 		Player p = turnList.remove(0);
 		goalInList.add(p);
 		int rank = goalInList.size() ;
