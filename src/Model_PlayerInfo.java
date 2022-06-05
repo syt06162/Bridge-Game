@@ -66,6 +66,9 @@ class Player {
 		pos_x = px;
 		model.notifyPlayerInfoChanged();
 	}
+	void increaseBcard() {
+		Bcard++;
+	}
 	void decreaseBcard() {
 		Bcard--;
 	}

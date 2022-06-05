@@ -77,7 +77,7 @@ public class Model_Ingame extends Observable {
 			
 		rollResult = (int)(Math.random()*6 + 1);
 		canMove = rollResult - nowPlayer.getBcard();
-		if (canMove<0) {
+		if (canMove<=0) {
 			canMove = 0;
 			newNotice(nowPlayer, "you cannot move. too much Bridge card");
 			turnEnd();
@@ -101,8 +101,10 @@ public class Model_Ingame extends Observable {
 			return;
 		}
 		
-		if (nowPlayer.getBcard() > 0)
+		if (nowPlayer.getBcard() > 0) {
 			nowPlayer.decreaseBcard();
+			newNotice(nowPlayer, "Bridge card - 1");
+		}
 		
 		turnEnd();
 		
@@ -134,12 +136,25 @@ public class Model_Ingame extends Observable {
 		// ty,tx: 한칸한칸 확인할 좌표
 		int ty = cy, tx = cx;
 		char moveDirection;
+		int bridgeCnt = 0;
+		
 		for (int i = 0; i<canMove; i++) {
 			moveDirection = input.charAt(i);
-			if (canGoBack && (map[ty][tx].charAt(2) != moveDirection) && (map[ty][tx].charAt(4) != moveDirection)) {
+			
+			// 브릿지 - 건너기 
+			if ((map[ty][tx].charAt(0) == 'B') && (moveDirection == 'R')) {
+				moveDirection = 'B';
+			}
+			// 브릿지 - 되돌아가기
+			else if ((canGoBack) && (map[ty][tx].charAt(0) == 'b') && (moveDirection == 'L')) {
+				moveDirection = 'b';
+			}
+			// 갈수없는 방향
+			else if (canGoBack && (map[ty][tx].charAt(2) != moveDirection) && (map[ty][tx].charAt(4) != moveDirection)) {
 				flag = false;
 				break;
 			}
+			// 뒤돌아갈수 없는데 뒤돌아가려고 하는 경우
 			else if ((!canGoBack) && (map[ty][tx].charAt(4) != moveDirection)) {
 				flag = false;
 				break;
@@ -163,6 +178,16 @@ public class Model_Ingame extends Observable {
 					tx += 1;
 					break;
 				}
+				case 'B': {
+					bridgeCnt++;
+					tx += 2;
+					break;
+				}
+				case 'b': {
+					bridgeCnt++;
+					tx -= 2;
+					break;
+				}
 			}
 		}
 		
@@ -173,7 +198,13 @@ public class Model_Ingame extends Observable {
 			return;
 		}
 		else {
+			// 이동 / 다리 건넌수만큼 카드 get
 			nowPlayer.move(ty, tx);
+			while (bridgeCnt > 0) {
+				nowPlayer.increaseBcard();
+				bridgeCnt--;
+			}
+			
 			RRorIM = 0;
 			newNotice(nowPlayer, "move success!");
 			turnEnd();
