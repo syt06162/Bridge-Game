@@ -15,6 +15,8 @@ public class Model_Map extends Observable {
 	private int end_x, end_y;
 	private int size_x, size_y; // size_x = right-left+1
 	
+	private int successLoad = 0; // flag
+	
 	Model_Map(String fileName) {
 		buildMap(fileName);
 	}
@@ -39,12 +41,24 @@ public class Model_Map extends Observable {
 	    } 
 		catch (NullPointerException e){ 
 	        e.getStackTrace();
+	        successLoad = -1;
+	        setChanged();
+	        notifyObservers();
+	        return;
 		}
 		catch (FileNotFoundException e) {
 			e.getStackTrace();
+			successLoad = -1;
+	        setChanged();
+	        notifyObservers();
+	        return;
 	    } 
 		catch (IOException e) {
 			e.getStackTrace();
+			successLoad = -1;
+	        setChanged();
+	        notifyObservers();
+	        return;
 	    }
 		
 		// ■ 맵 사이즈 계산 (계산 후 상하좌우에 + 1 하여 여백)
@@ -151,6 +165,7 @@ public class Model_Map extends Observable {
 //        }
         
         // observer 알려주기
+        successLoad = 0;
         setChanged();
         notifyObservers();
 	}
@@ -178,4 +193,8 @@ public class Model_Map extends Observable {
 	public String[][] getMap(){
 		return map;
 	}
+	public int getSuccessLoad() {
+		return successLoad;
+	}
+	
 }

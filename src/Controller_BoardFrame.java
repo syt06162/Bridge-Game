@@ -29,8 +29,8 @@ public class Controller_BoardFrame extends JFrame {
 	
 	private Model_Ingame model_Ingame;
 	
-	private JPanel startPanel;
-	private JPanel ingamePanel;
+	private StartPanel startPanel;
+	private IngamePanel ingamePanel;
 	
 	Controller_BoardFrame(String fileName){
 		// view, model

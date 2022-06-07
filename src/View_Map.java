@@ -13,6 +13,7 @@ import java.util.Observer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 @SuppressWarnings("deprecation")
@@ -60,8 +61,12 @@ class View_Map extends JPanel implements Observer{
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		
-		mapInitialized();
+		if (model.getSuccessLoad() == 0)
+			mapInitialized();
+		else {
+			JOptionPane.showMessageDialog(
+					null, "map file load error", "Map Load Error", JOptionPane.WARNING_MESSAGE);
+		}
 		
 	}
 	
