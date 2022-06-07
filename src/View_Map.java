@@ -38,8 +38,6 @@ class View_Map extends JPanel implements Observer{
 	private Image[] img_Start;
 	private Image[] img_End;
 	
-	// player character
-	private Model_PlayerInfo model_PlayerInfo;
 	private Player[] players;
 	private ArrayList<Piece> piece;
 	private int numPlayers;
@@ -262,7 +260,6 @@ class View_Map extends JPanel implements Observer{
 	// View - model ¿¬°á!
 	void startGame(Model_PlayerInfo model_PlayerInfo) {
 		isPlaying = true;
-		this.model_PlayerInfo = model_PlayerInfo;
 		this.players = model_PlayerInfo.getPlayers();
 		this.numPlayers = model_PlayerInfo.getNumPlayers();
 		

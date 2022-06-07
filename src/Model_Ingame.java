@@ -3,11 +3,8 @@ import java.util.Observable;
 
 @SuppressWarnings("deprecation")
 public class Model_Ingame extends Observable {
-	// 지도 정보
-	private Model_Map model_Map;
 	private String[][] map;
 	private int start_y, start_x;
-	private int end_y, end_x;
 	
 	// 플레이어 정보
 	private Model_PlayerInfo model_PlayerInfo;
@@ -32,16 +29,14 @@ public class Model_Ingame extends Observable {
 	private int observerUpdateFlag;
 
 	Model_Ingame(Model_Map model_Map , Model_PlayerInfo model_PlayerInfo) {
-		// model 끼리 통신
-		this.model_Map = model_Map;
 		this.model_PlayerInfo = model_PlayerInfo;
 		map = model_Map.getMap();
 		players = model_PlayerInfo.getPlayers();
 		numPlayers = model_PlayerInfo.getNumPlayers();
 		start_y = model_Map.getStartY();
 		start_x = model_Map.getStartX();
-		end_y = model_Map.getEndY();
-		end_x = model_Map.getEndX();
+		model_Map.getEndY();
+		model_Map.getEndX();
 		
 		// 플레이어 위치 지정
 		for (int i = 0; i<numPlayers; i++) {

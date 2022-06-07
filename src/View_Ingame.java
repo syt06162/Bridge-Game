@@ -14,12 +14,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class View_Ingame extends JPanel implements Observer{
 	private Controller_BoardFrame controller;
-	private Model_Map model_Map;
 	private Model_PlayerInfo model_PlayerInfo;
 	private Model_Ingame model_Ingame;
-	
-	//player info
-	private Player[] players;
 	
 	// panel ±¸¼º
 	private final int NOTICE_CNT = 3;

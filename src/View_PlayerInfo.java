@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
 @SuppressWarnings("deprecation")
 public class View_PlayerInfo extends JPanel implements Observer{
 	private Controller_BoardFrame controller;
-	private Model_PlayerInfo model_PlayerInfo;
 	
 	//player info
 	private Player[] players;
@@ -25,8 +24,6 @@ public class View_PlayerInfo extends JPanel implements Observer{
 	private JScrollPane scrollPane;
 	
 	View_PlayerInfo(Model_PlayerInfo model_PlayerInfo) {
-		// model 초기 연동
-		this.model_PlayerInfo = model_PlayerInfo;
 		players = model_PlayerInfo.getPlayers();
 		numPlayers = model_PlayerInfo.getNumPlayers();
 		

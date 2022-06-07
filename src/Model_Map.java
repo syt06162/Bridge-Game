@@ -156,13 +156,13 @@ public class Model_Map extends Observable {
         map[end_y][end_x] = "E 3";
         map[end_y][end_x+1] = "E 4";
         
-//        // debug
-//        for (int i = 0; i< size_y; i++){
-//        	for (int j = 0; j< size_x; j++){
-//            	System.out.print(map[i][j].charAt(0));
-//            }
-//        	System.out.println();
-//        }
+        // debug
+        for (int i = 0; i< size_y; i++){
+        	for (int j = 0; j< size_x; j++){
+            	System.out.print(map[i][j].charAt(0));
+            }
+        	System.out.println();
+        }
         
         // observer 알려주기
         successLoad = 0;
