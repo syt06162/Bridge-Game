@@ -18,9 +18,9 @@ Bridge Game with Java GUI (CAU 2022-1)
 - 가장 처음 END 를 넘은 플레이어는 7 점, 두 번째 플레이어는 3 점, 세 번째 플레이어는 1 점
 
 - 플레이어는 각 도구 카드에 대해 다음과 같은 점수를 얻는다.
-  Philips Driver (P) : 1점   
-  Hammer (H) : 2점   
-  Saw (S): 3점   
+\* Philips Driver (P) : 1점   
+\* Hammer (H) : 2점   
+\* Saw (S): 3점   
 
 - 한명의 플레이어만 보드에 남으면 게임 종료
 - 총점 = 도구 카드 점수 + 순위 점수, 총점이 가장 높은 플레이어가 승리
