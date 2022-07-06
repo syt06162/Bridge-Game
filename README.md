@@ -44,27 +44,27 @@ Bridge Game with Java GUI (CAU 2022-1)
 - MVC 패턴 (Java의 Observable, Observer 이용)
 
 ## 요구 분석
-### Use Case
-![use case drawio](https://user-images.githubusercontent.com/92567571/177503684-757bd989-04a1-49b7-9696-66fbad00d8c6.png)
-### Domain Model
-![domain model drawio](https://user-images.githubusercontent.com/92567571/177503554-e4390f81-61af-40d6-9b68-531b92989ff3.png)
-### SSD
-![SSD - player drawio](https://user-images.githubusercontent.com/92567571/177503577-550a77b5-8162-46b5-8ee8-f2afbe6d408d.png)
-![SSD - start](https://user-images.githubusercontent.com/92567571/177503698-bb3fefab-4ead-4c9f-b88d-21497f8ccfa6.png)
+### 1. Use Case
+![use case drawio](https://user-images.githubusercontent.com/92567571/177503684-757bd989-04a1-49b7-9696-66fbad00d8c6.png)   
+### 2. Domain Model
+![domain model drawio](https://user-images.githubusercontent.com/92567571/177503554-e4390f81-61af-40d6-9b68-531b92989ff3.png)   
+### 3. SSD
+![SSD - player drawio](https://user-images.githubusercontent.com/92567571/177503577-550a77b5-8162-46b5-8ee8-f2afbe6d408d.png)   
+![SSD - start](https://user-images.githubusercontent.com/92567571/177503698-bb3fefab-4ead-4c9f-b88d-21497f8ccfa6.png)   
 
 ## 설계 분석
-### Class Diagram - model
-![Class Diagram - model drawio](https://user-images.githubusercontent.com/92567571/177504115-7523ada2-0eb9-4396-8cb0-4a249bc9fac2.png)
-### Class Diagram - with MVC
-![Class Diagram - MVC drawio](https://user-images.githubusercontent.com/92567571/177504133-09ccda18-431d-42c7-973e-3529ef7e7446.png)
-### Sequence Diagram - game start
-![Sequence Diagram - game start drawio](https://user-images.githubusercontent.com/92567571/177504296-6722c54c-326d-4fe7-8907-1018039d8c8a.png)
-### Sequence Diagram - load map
-![Sequence Diagram - load map drawio](https://user-images.githubusercontent.com/92567571/177504327-6caa04d5-1958-46df-82e5-d859b0439f19.png)
-### Sequence Diagram - game play
-![Sequence Diagram - game play drawio](https://user-images.githubusercontent.com/92567571/177504309-4fb22c7c-a6be-493d-bb84-e5052e52ff18.png)
-### State Chart
-![State chart drawio](https://user-images.githubusercontent.com/92567571/177504389-acf78944-700b-4ccf-a673-86d5c0c0592c.png)
+### 1. Class Diagram - model
+![Class Diagram - model drawio](https://user-images.githubusercontent.com/92567571/177504115-7523ada2-0eb9-4396-8cb0-4a249bc9fac2.png)   
+### 2. Class Diagram - with MVC
+![Class Diagram - MVC drawio](https://user-images.githubusercontent.com/92567571/177504133-09ccda18-431d-42c7-973e-3529ef7e7446.png)   
+### 3. Sequence Diagram - game start
+![Sequence Diagram - game start drawio](https://user-images.githubusercontent.com/92567571/177504296-6722c54c-326d-4fe7-8907-1018039d8c8a.png)   
+### 4. Sequence Diagram - load map
+![Sequence Diagram - load map drawio](https://user-images.githubusercontent.com/92567571/177504327-6caa04d5-1958-46df-82e5-d859b0439f19.png)   
+### 5. Sequence Diagram - game play
+![Sequence Diagram - game play drawio](https://user-images.githubusercontent.com/92567571/177504309-4fb22c7c-a6be-493d-bb84-e5052e52ff18.png)   
+### 6. State Chart
+![State chart drawio](https://user-images.githubusercontent.com/92567571/177504389-acf78944-700b-4ccf-a673-86d5c0c0592c.png)   
 
 ## 참고 자료
 - 2022-1 중앙대학교 이찬근 교수님 소프트웨어공학 텀 프로젝트 설명서
